@@ -1,0 +1,40 @@
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(218, 218, 218, 0.8);
+  z-index: 1;
+}
+
+.Modal {
+  padding: 20px;
+  background-color: rgb(255, 255, 255);
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 24px);
+  z-index: 2;
+}
+
+.Form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.TextField {
+  margin-bottom: 10px;
+}
+
+.Modal .button:hover {
+  color: #fff;
+  background-color: #3f51b5;
+}
+
+.Modal .button:focus {
+  color: #fff;
+  background-color: #3f51b5;
+}
