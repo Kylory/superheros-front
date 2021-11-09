@@ -20,7 +20,7 @@
 }
 
 .Form {
-  width: 500px;
+  width: 400px;
   display: flex;
   flex-direction: column;
 }
@@ -37,4 +37,12 @@
 .Modal .button:focus {
   color: #fff;
   background-color: #3f51b5;
+}
+
+.input {
+  display: none;
+}
+
+.submitButton {
+  width: 200px;
 }

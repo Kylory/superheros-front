@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { getAllSuperheros } from '../../ApiServise/ApiServise'
-// import AddSuperheroBtn from '../../../components/AddSuperheroBtn/AddSuperheroBtn'
+import {
+  getAllSuperheros,
+  deleteSuperheroById,
+} from '../../ApiServise/ApiServise'
+
+import IconButton from '@material-ui/core/IconButton'
+import CancelTwoToneIcon from '@material-ui/icons/CancelTwoTone'
 
 import styles from './HomeView.module.css'
 
@@ -15,22 +20,31 @@ const HomeView = () => {
 
   return (
     <div className={styles.trendingSection}>
-      <h2 className={styles.trendingTitle}>Superheros</h2>
-      {/* <AddSuperheroBtn /> */}
       <ul className={styles.trendingList}>
         {stateSuperheros &&
           stateSuperheros.map(({ _id, nickname }) => (
             <li key={_id}>
               <Link
                 to={{
-                  pathname: `/movies/${_id}`,
+                  pathname: `/superheros/${_id}`,
                   state: {
                     from: location,
                   },
                 }}
               >
-                {nickname}
+                <p>{nickname}</p>
+                {/* <p>images: {images}</p> */}
               </Link>
+              <IconButton
+                className={styles.button}
+                aria-label='delete'
+                size='small'
+                onClick={() => {
+                  deleteSuperheroById(_id)
+                }}
+              >
+                <CancelTwoToneIcon />
+              </IconButton>
             </li>
           ))}
       </ul>

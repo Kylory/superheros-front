@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const API_OPTIONS = {
-  BASE_URL: 'https://app-superheros.herokuapp.com/api',
+  BASE_URL: 'http://localhost:4000/api',
+  // BASE_URL: 'https://app-superheros.herokuapp.com/api',
   // MEDIA_TYPE: 'all',
   // TIME_WINDOW: 'day',
   // API_KEY: '75ca290b8be3cd62eb0cb9206dc4c97a',
@@ -11,22 +12,29 @@ async function getAllSuperheros() {
   const { BASE_URL } = API_OPTIONS
 
   const response = await axios.get(`${BASE_URL}/superheros?page=1&limit=30`)
-  console.log(response.data.superheros)
+  // console.log('getAllSuperheros response:', response)
   return response.data.superheros.docs
 }
 
 async function getSuperheroById(superheroId) {
   const { BASE_URL } = API_OPTIONS
-
+  // console.log(`${BASE_URL}/superheros/${superheroId}`)
   const response = await axios.get(`${BASE_URL}/superheros/${superheroId}`)
-  return response
+  // console.log(response)
+  return response.data
 }
 
 async function addSuperhero(data) {
   const { BASE_URL } = API_OPTIONS
-  // console.log(data)
+  // console.log('FRONT addSuperhero', data)
   const response = await axios.post(`${BASE_URL}/superheros`, data)
   return response
+}
+
+async function deleteSuperheroById(superheroId) {
+  const { BASE_URL } = API_OPTIONS
+  const response = await axios.delete(`${BASE_URL}/superheros/${superheroId}`)
+  return response.data
 }
 
 // async function fetchMovieByQuery(uqery) {
@@ -62,6 +70,7 @@ export {
   getAllSuperheros,
   getSuperheroById,
   addSuperhero,
+  deleteSuperheroById,
   // FetchMovieCast,
   // fetchMovieByQuery,
   // FetchMovieReviews,

@@ -1,34 +1,29 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import {
   useParams,
-  NavLink,
-  useRouteMatch,
-  Route,
+  // NavLink,
+  // useRouteMatch,
+  // Route,
   useHistory,
   useLocation,
 } from 'react-router-dom'
-// import { fetchMovie } from "../../ApiServise/ApiServise";
+import { getSuperheroById } from '../../ApiServise/ApiServise'
 
-import styles from './MoviesDetailsView.module.css'
+import styles from './HeroDetailsView.module.css'
 
-// const CastView = lazy(() =>
-//   import('../CastView/CastView' /*webpackChunkName: "cast-view" */)
-// )
-// const ReviewsView = lazy(() =>
-//   import('../ReviewsView/ReviewsView' /*webpackChunkName: "reviews-view" */)
-// )
+const HeroDetailsView = () => {
+  const [stateSuperhero, setStateSuperhero] = useState()
 
-const MoviesView = () => {
-  const [stateMovie, setStateMovie] = useState()
-
-  const { movieId } = useParams()
-  const { url } = useRouteMatch()
+  const { superheroId } = useParams()
+  // const { url } = useRouteMatch()
   const { state } = useLocation()
   const history = useHistory()
 
   useEffect(() => {
-    // fetchMovie(movieId).then((response) => setStateMovie(response))
-  }, [movieId])
+    getSuperheroById(superheroId).then((response) =>
+      setStateSuperhero(response)
+    )
+  }, [superheroId])
 
   const goBack = () => {
     state?.from.pathname ? history.push(state.from.pathname) : history.push('/')
@@ -45,9 +40,14 @@ const MoviesView = () => {
       <button className={styles.goBackBtn} type='button' onClick={goBack}>
         Go back
       </button>
-      {stateMovie && (
+      {stateSuperhero && (
         <section className={styles.section}>
-          <div className={styles.wrapper}>
+          <p>nickname: {stateSuperhero.nickname}</p>
+          <p>real_name: {stateSuperhero.real_name}</p>
+          <p>origin_description: {stateSuperhero.origin_description}</p>
+          <p>superpowers: {stateSuperhero.superpowers}</p>
+          <p>catch_phrase: {stateSuperhero.catch_phrase}</p>
+          {/* <div className={styles.wrapper}>
             <img
               src={
                 stateMovie.poster_path
@@ -69,8 +69,8 @@ const MoviesView = () => {
               </ul>
             </div>
           </div>
-          <div className={styles.subMenu}>
-            <p>Additional information</p>
+          <div className={styles.subMenu}> */}
+          {/* <p>Additional information</p>
             <NavLink
               className={styles.cast}
               to={{
@@ -89,7 +89,7 @@ const MoviesView = () => {
             >
               Reviews
             </NavLink>
-          </div>
+          </div> */}
         </section>
       )}
       {/* <Suspense fallback={<div>Loading...</div>}>
@@ -106,4 +106,4 @@ const MoviesView = () => {
   )
 }
 
-export default MoviesView
+export default HeroDetailsView
