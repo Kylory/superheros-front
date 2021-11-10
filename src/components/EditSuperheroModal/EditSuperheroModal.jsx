@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Button, TextField } from '@material-ui/core'
-import styles from './AddSuperheroModal.module.css'
-import { addSuperhero } from '../ApiServise/ApiServise'
+import styles from './EditSuperheroModal.module.css'
+import { updateSuperheroBuId } from '../ApiServise/ApiServise'
 // import PropTypes from 'prop-types'
 
 const Modal = (props) => {
-  const [nickname, setNickname] = useState('')
-  const [real_name, setRealName] = useState('')
-  const [origin_description, setOriginDescription] = useState('')
-  const [superpowers, setSuperpowers] = useState('')
-  const [catch_phrase, setCatchPhrase] = useState('')
-  const [images, setImages] = useState(null)
-  const isButtonDisable = nickname === ''
+  const [nickname, setNickname] = useState(props.data.nickname)
+  const [real_name, setRealName] = useState(props.data.real_name)
+  const [origin_description, setOriginDescription] = useState(
+    props.data.origin_description
+  )
+  const [superpowers, setSuperpowers] = useState(props.data.superpowers)
+  const [catch_phrase, setCatchPhrase] = useState(props.data.catch_phrase)
+  const { superheroId } = useParams()
+  // const [images, setImages] = useState(null)
+  // const isButtonDisable = nickname === ''
 
   // Додає EventListener для відстеження натискання кнопок
   useEffect(() => {
@@ -46,10 +50,9 @@ const Modal = (props) => {
         setCatchPhrase(value)
         break
 
-      case 'images':
-        // setFile(e.target.files)
-        setImages(e.target.files)
-        break
+      // case 'images':
+      //   setImages(e.target.files)
+      //   break
 
       default:
         break
@@ -71,31 +74,10 @@ const Modal = (props) => {
     }
   }
 
-  // async function deleteItem(id) {
-  //   dispatch(contactsOperations.deleteContact(id))
-  //   await dispatch(contactsOperations.DB_deleteContact(id))
-  // }
-
-  // async function handleSubmit(e) {
-  //   e.preventDefault()
-  //   const res = await addSuperhero({
-  //     nickname,
-  //     real_name,
-  //     origin_description,
-  //     superpowers,
-  //     catch_phrase,
-  //   })
-
-  //   if (res.status === 201) {
-  //     getAllSuperheros()
-  //     props.closeModal()
-  //   }
-  // }
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const userData = {
+    const data = {
       nickname: nickname,
       real_name: real_name,
       origin_description: origin_description,
@@ -103,21 +85,23 @@ const Modal = (props) => {
       catch_phrase: catch_phrase,
     }
 
-    const data = new FormData()
+    updateSuperheroBuId(superheroId, data)
+
+    // const data = new FormData()
 
     //Додає дані юзера в FormData
-    Object.keys(userData).forEach((element) =>
-      data.append(element, userData[element])
-    )
+    // Object.keys(userData).forEach((element) =>
+    //   data.append(element, userData[element])
+    // )
 
     //Додає картинки юзера в FormData
-    if (images) {
-      Object.keys(images).forEach((element) =>
-        data.append('images', images[element], element.name)
-      )
-    }
+    // if (images) {
+    //   Object.keys(images).forEach((element) =>
+    //     data.append('images', images[element], element.name)
+    //   )
+    // }
 
-    addSuperhero(data)
+    // addSuperhero(data)
     props.closeModal()
   }
 
@@ -125,7 +109,6 @@ const Modal = (props) => {
     <div className={styles.Overlay} onClick={handleClick}>
       <div className={styles.Modal}>
         <form
-          encType='multipart/form-data'
           className={styles.Form}
           onSubmit={handleSubmit}
           noValidate
@@ -134,8 +117,6 @@ const Modal = (props) => {
           <TextField
             className={styles.TextField}
             onChange={handleChange}
-            autoFocus={true}
-            required={true}
             name='nickname'
             type='text'
             value={nickname}
@@ -190,23 +171,15 @@ const Modal = (props) => {
             label='Catch Phrase'
             variant='outlined'
           />
-          <input
-            className={styles.fileInput}
-            type='file'
-            name='images'
-            accept='image/*'
-            multiple
-            onChange={handleChange}
-          />
 
           <Button
             className={styles.submitButton}
-            disabled={isButtonDisable}
+            // disabled={isButtonDisable}
             type='submit'
             size='small'
             variant='contained'
           >
-            Add Superhero
+            Edit Superhero
           </Button>
         </form>
       </div>

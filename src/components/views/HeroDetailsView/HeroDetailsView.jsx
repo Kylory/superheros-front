@@ -1,19 +1,14 @@
 import { useState, useEffect } from 'react'
-import {
-  useParams,
-  // NavLink,
-  // useRouteMatch,
-  // Route,
-  useHistory,
-  useLocation,
-} from 'react-router-dom'
+import { useParams, useHistory, useLocation } from 'react-router-dom'
 import { getSuperheroById } from '../../ApiServise/ApiServise'
+import EditSuperheroModal from '../../EditSuperheroModal/EditSuperheroModal'
+import AddSuperheroBtn from '../../AddSuperheroBtn/AddSuperheroBtn'
 
 import styles from './HeroDetailsView.module.css'
 
 const HeroDetailsView = () => {
   const [stateSuperhero, setStateSuperhero] = useState()
-
+  const [stateShowModal, setStateShowModal] = useState(false)
   const { superheroId } = useParams()
   // const { url } = useRouteMatch()
   const { state } = useLocation()
@@ -35,73 +30,53 @@ const HeroDetailsView = () => {
     }
   }
 
+  const openModal = (e) => {
+    setStateShowModal(true)
+  }
+
+  const closeModal = () => {
+    setStateShowModal(false)
+  }
+
   return (
     <>
       <button className={styles.goBackBtn} type='button' onClick={goBack}>
         Go back
       </button>
+      <AddSuperheroBtn onClick={openModal} text='Edit Superhero' />
+      {stateShowModal && (
+        <EditSuperheroModal
+          closeModal={closeModal}
+          data={stateSuperhero}
+        ></EditSuperheroModal>
+      )}
       {stateSuperhero && (
         <section className={styles.section}>
-          <p>nickname: {stateSuperhero.nickname}</p>
-          <p>real_name: {stateSuperhero.real_name}</p>
-          <p>origin_description: {stateSuperhero.origin_description}</p>
-          <p>superpowers: {stateSuperhero.superpowers}</p>
-          <p>catch_phrase: {stateSuperhero.catch_phrase}</p>
-          {/* <div className={styles.wrapper}>
-            <img
-              src={
-                stateMovie.poster_path
-                  ? `https://image.tmdb.org/t/p/w200${stateMovie.poster_path}`
-                  : 'https://dummyimage.com/200x300/b3b3b3/fff.jpg&text=No+image'
-              }
-              alt={stateMovie.title}
-            />
-            <div className={styles.description}>
-              <h2>{stateMovie.title}</h2>
-              <p>User score {stateMovie.vote_average}</p>
-              <h3>Overview</h3>
-              <p>{stateMovie.overview}</p>
-              <h3>Genres</h3>
-              <ul>
-                {stateMovie.genres.map(({ id, name }) => (
-                  <li key={id}>{name}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className={styles.subMenu}> */}
-          {/* <p>Additional information</p>
-            <NavLink
-              className={styles.cast}
-              to={{
-                pathname: `${url}/cast`,
-                state: { ...state },
-              }}
-            >
-              Cast
-            </NavLink>
-            <NavLink
-              className={styles.reviews}
-              to={{
-                pathname: `${url}/reviews`,
-                state: { ...state },
-              }}
-            >
-              Reviews
-            </NavLink>
-          </div> */}
+          <ul className={styles.imageList}>
+            {stateSuperhero.images.length !== 0 &&
+              stateSuperhero.images.map((image) => (
+                <li key={image}>
+                  <img src={image} alt={stateSuperhero.name} height='200px' />
+                </li>
+              ))}
+          </ul>
+          {stateSuperhero.nickname && (
+            <p>Nickname: {stateSuperhero.nickname}</p>
+          )}
+          {stateSuperhero.real_name && (
+            <p>Real name: {stateSuperhero.real_name}</p>
+          )}
+          {stateSuperhero.origin_description && (
+            <p>Origin Description: {stateSuperhero.origin_description}</p>
+          )}
+          {stateSuperhero.superpowers && (
+            <p>Superpowers: {stateSuperhero.superpowers}</p>
+          )}
+          {stateSuperhero.catch_phrase && (
+            <p>Catch phrase: {stateSuperhero.catch_phrase}</p>
+          )}
         </section>
       )}
-      {/* <Suspense fallback={<div>Loading...</div>}>
-        <Route
-          path={`${url}/cast`}
-          render={() => <CastView movieId={movieId} />}
-        ></Route>
-        <Route
-          path={`${url}/reviews`}
-          render={() => <ReviewsView movieId={movieId} />}
-        ></Route>
-      </Suspense> */}
     </>
   )
 }

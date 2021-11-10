@@ -1,14 +1,23 @@
-.trendingSection {
-  padding-top: 10px;
-  /* padding-left: 20px; */
-}
-
-.trendingList {
+.superherosList {
   padding-top: 10px;
 }
 
-.trendingList li {
+.superherosList li {
+  align-items: center;
   display: flex;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.superherosImage {
+  margin-right: 20px;
+}
+
+.superherosTitle {
+  font-size: 30px;
+}
+
+.button {
+  margin-left: 10px;
+  padding-top: 9px;
 }

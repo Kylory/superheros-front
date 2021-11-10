@@ -1,46 +1,15 @@
 .goBackBtn {
-  margin-top: 15px;
-  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
-.wrapper {
+.section p:not(:first-child) {
+  margin-top: 10px;
+}
+
+.imageList {
   display: flex;
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
-.description {
-  margin-left: 20px;
-}
-
-.description h2 {
-  margin-top: 20px;
-}
-
-.description h3 {
-  margin-top: 20px;
-}
-
-.subMenu {
-  margin-top: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
-}
-
-.subMenu p {
-  margin-bottom: 15px;
-}
-
-.cast {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.reviews {
-  display: block;
+.imageList li:not(:first-child) {
+  margin-left: 10px;
 }

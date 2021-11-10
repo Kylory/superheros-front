@@ -37,6 +37,15 @@ async function deleteSuperheroById(superheroId) {
   return response.data
 }
 
+async function updateSuperheroBuId(superheroId, data) {
+  const { BASE_URL } = API_OPTIONS
+  const response = await axios.put(
+    `${BASE_URL}/superheros/${superheroId}`,
+    data
+  )
+  return response
+}
+
 // async function fetchMovieByQuery(uqery) {
 //   const { BASE_URL, API_KEY } = API_OPTIONS
 
@@ -71,6 +80,7 @@ export {
   getSuperheroById,
   addSuperhero,
   deleteSuperheroById,
+  updateSuperheroBuId,
   // FetchMovieCast,
   // fetchMovieByQuery,
   // FetchMovieReviews,

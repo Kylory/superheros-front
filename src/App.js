@@ -1,8 +1,8 @@
 import { Switch, Route } from 'react-router-dom'
 // import { lazy, Suspense } from 'react'
-import { useState } from 'react'
-import AddSuperheroBtn from './components/AddSuperheroBtn/AddSuperheroBtn'
-import AddSuperheroModal from './components/AddSuperheroModal/AddSuperheroModal'
+// import { useState } from 'react'
+// import AddSuperheroBtn from './components/AddSuperheroBtn/AddSuperheroBtn'
+// import AddSuperheroModal from './components/AddSuperheroModal/AddSuperheroModal'
 import Container from './components/Container/Container'
 
 import HomeView from '../src/components/views/HomeView/HomeView'
@@ -39,23 +39,23 @@ import HeroDetailsView from './components/views/HeroDetailsView/HeroDetailsView'
 // )
 
 const App = () => {
-  const [stateShowModal, setStateShowModal] = useState(false)
+  // const [stateShowModal, setStateShowModal] = useState(false)
 
-  const openModal = (e) => {
-    setStateShowModal(true)
-  }
+  // const openModal = (e) => {
+  //   setStateShowModal(true)
+  // }
 
-  const closeModal = () => {
-    setStateShowModal(false)
-  }
+  // const closeModal = () => {
+  //   setStateShowModal(false)
+  // }
 
   return (
     // <Suspense fallback={<div>Loading...</div>}>
     <Container>
-      <AddSuperheroBtn onClick={openModal} />
-      {stateShowModal && (
+      {/* <AddSuperheroBtn onClick={openModal} /> */}
+      {/* {stateShowModal && (
         <AddSuperheroModal closeModal={closeModal}></AddSuperheroModal>
-      )}
+      )} */}
       <Switch>
         <Route path='/' exact>
           <HomeView />
