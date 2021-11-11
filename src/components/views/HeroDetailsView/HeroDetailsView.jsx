@@ -43,7 +43,7 @@ const HeroDetailsView = () => {
   }
 
   return (
-    <>
+    <div className={styles.heroDetails}>
       <button className={styles.goBackBtn} type='button' onClick={goBack}>
         Go back
       </button>
@@ -92,7 +92,7 @@ const HeroDetailsView = () => {
           )}
         </section>
       )}
-    </>
+    </div>
   )
 }
 
