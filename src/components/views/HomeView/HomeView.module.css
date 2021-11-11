@@ -1,12 +1,11 @@
 .superherosList {
-  padding-top: 10px;
+  padding-top: 15px;
 }
 
 .superherosList li {
-  align-items: center;
   display: flex;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  align-items: center;
+  padding-bottom: 10px;
 }
 
 .superherosImage {
@@ -17,7 +16,7 @@
   font-size: 30px;
 }
 
-.button {
-  margin-left: 10px;
-  padding-top: 9px;
+.superherosList .button {
+  margin-left: 20px;
+  margin-top: 9px;
 }

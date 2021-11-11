@@ -1,5 +1,6 @@
 .goBackBtn {
   margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .section p:not(:first-child) {

@@ -10,7 +10,6 @@ const HeroDetailsView = () => {
   const [stateSuperhero, setStateSuperhero] = useState()
   const [stateShowModal, setStateShowModal] = useState(false)
   const { superheroId } = useParams()
-  // const { url } = useRouteMatch()
   const { state } = useLocation()
   const history = useHistory()
 
@@ -30,12 +29,17 @@ const HeroDetailsView = () => {
     }
   }
 
-  const openModal = (e) => {
+  const openModal = () => {
     setStateShowModal(true)
   }
 
-  const closeModal = () => {
+  const closeModal = (data) => {
     setStateShowModal(false)
+    if (data) {
+      getSuperheroById(superheroId).then((response) =>
+        setStateSuperhero(response)
+      )
+    }
   }
 
   return (
@@ -53,12 +57,23 @@ const HeroDetailsView = () => {
       {stateSuperhero && (
         <section className={styles.section}>
           <ul className={styles.imageList}>
-            {stateSuperhero.images.length !== 0 &&
+            {stateSuperhero.images.length !== 0 ? (
               stateSuperhero.images.map((image) => (
                 <li key={image}>
                   <img src={image} alt={stateSuperhero.name} height='200px' />
                 </li>
-              ))}
+              ))
+            ) : (
+              <li>
+                <img
+                  src={
+                    'https://www.samatters.com/wp-content/uploads/2017/04/Super-Hero-300x286.png'
+                  }
+                  alt={stateSuperhero.name}
+                  height='200px'
+                />
+              </li>
+            )}
           </ul>
           {stateSuperhero.nickname && (
             <p>Nickname: {stateSuperhero.nickname}</p>

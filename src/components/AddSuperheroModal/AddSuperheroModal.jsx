@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import styles from './AddSuperheroModal.module.css'
 import { addSuperhero } from '../ApiServise/ApiServise'
-// import PropTypes from 'prop-types'
 
 const Modal = (props) => {
   const [nickname, setNickname] = useState('')
@@ -71,28 +70,7 @@ const Modal = (props) => {
     }
   }
 
-  // async function deleteItem(id) {
-  //   dispatch(contactsOperations.deleteContact(id))
-  //   await dispatch(contactsOperations.DB_deleteContact(id))
-  // }
-
-  // async function handleSubmit(e) {
-  //   e.preventDefault()
-  //   const res = await addSuperhero({
-  //     nickname,
-  //     real_name,
-  //     origin_description,
-  //     superpowers,
-  //     catch_phrase,
-  //   })
-
-  //   if (res.status === 201) {
-  //     getAllSuperheros()
-  //     props.closeModal()
-  //   }
-  // }
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const userData = {
@@ -117,8 +95,10 @@ const Modal = (props) => {
       )
     }
 
-    addSuperhero(data)
-    props.closeModal()
+    const res = await addSuperhero(data)
+    if (res.status === 201) {
+      props.closeModal('sended')
+    }
   }
 
   return (

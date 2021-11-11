@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { Button, TextField } from '@material-ui/core'
 import styles from './EditSuperheroModal.module.css'
 import { updateSuperheroBuId } from '../ApiServise/ApiServise'
-// import PropTypes from 'prop-types'
 
 const Modal = (props) => {
   const [nickname, setNickname] = useState(props.data.nickname)
@@ -14,8 +13,6 @@ const Modal = (props) => {
   const [superpowers, setSuperpowers] = useState(props.data.superpowers)
   const [catch_phrase, setCatchPhrase] = useState(props.data.catch_phrase)
   const { superheroId } = useParams()
-  // const [images, setImages] = useState(null)
-  // const isButtonDisable = nickname === ''
 
   // Додає EventListener для відстеження натискання кнопок
   useEffect(() => {
@@ -74,7 +71,7 @@ const Modal = (props) => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const data = {
@@ -85,24 +82,10 @@ const Modal = (props) => {
       catch_phrase: catch_phrase,
     }
 
-    updateSuperheroBuId(superheroId, data)
-
-    // const data = new FormData()
-
-    //Додає дані юзера в FormData
-    // Object.keys(userData).forEach((element) =>
-    //   data.append(element, userData[element])
-    // )
-
-    //Додає картинки юзера в FormData
-    // if (images) {
-    //   Object.keys(images).forEach((element) =>
-    //     data.append('images', images[element], element.name)
-    //   )
-    // }
-
-    // addSuperhero(data)
-    props.closeModal()
+    const res = await updateSuperheroBuId(superheroId, data)
+    if (res.status === 200) {
+      props.closeModal('ok')
+    }
   }
 
   return (
@@ -174,7 +157,6 @@ const Modal = (props) => {
 
           <Button
             className={styles.submitButton}
-            // disabled={isButtonDisable}
             type='submit'
             size='small'
             variant='contained'
