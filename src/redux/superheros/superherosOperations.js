@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { createAction } from '@reduxjs/toolkit'
+// import { createAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'https://app-superheros.herokuapp.com/api'
@@ -18,8 +18,8 @@ export const getAllSuperheros = createAsyncThunk(
   'superheros/getAllSuperheros',
   async (page, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get('/superheros', page)
-      return data
+      const { docs } = await axios.get('/superheros', page)
+      return docs
     } catch (error) {
       return rejectWithValue(error)
     }
@@ -37,8 +37,8 @@ export const getSuperheroById = createAsyncThunk(
   'superheros/getSuperheroById',
   async (superheroId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get('/superheros', superheroId)
-      return data
+      const { docs } = await axios.get(`/superheros/${superheroId}`)
+      return docs
     } catch (error) {
       return rejectWithValue(error)
     }
@@ -53,20 +53,22 @@ export const getSuperheroById = createAsyncThunk(
 // }
 
 export const addSuperhero = createAsyncThunk(
-  'superheros/getSuperheroById',
+  'superheros/addSuperhero',
   async (
-    { nickname, real_name, origin_description, superpowers, catch_phrase },
+    // { nickname, real_name, origin_description, superpowers, catch_phrase },
+    { data },
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await axios.post('/contacts', {
-        nickname: `${nickname}`,
-        real_name: `${real_name}`,
-        origin_description: `${origin_description}`,
-        superpowers: `${superpowers}`,
-        catch_phrase: `${catch_phrase}`,
+      const response = await axios.post('/contacts', {
+        // nickname: `${nickname}`,
+        // real_name: `${real_name}`,
+        // origin_description: `${origin_description}`,
+        // superpowers: `${superpowers}`,
+        // catch_phrase: `${catch_phrase}`,
+        data,
       })
-      return data
+      return response
     } catch (error) {
       return rejectWithValue(error)
     }
@@ -80,6 +82,18 @@ export const addSuperhero = createAsyncThunk(
 //   return response.data
 // }
 
+export const deleteSuperheroById = createAsyncThunk(
+  'contacts/deleteSuperheroById',
+  async (superheroId, { rejectWithValue }) => {
+    try {
+      await axios.delete(`/contacts/${superheroId}`)
+      return superheroId
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
 // async function updateSuperheroBuId(superheroId, data) {
 //   const { BASE_URL } = API_OPTIONS
 //   const response = await axios.put(
@@ -89,3 +103,15 @@ export const addSuperhero = createAsyncThunk(
 
 //   return response
 // }
+
+export const updateSuperheroBuId = createAsyncThunk(
+  'contacts/updateSuperheroBuId',
+  async (superheroId, data, { rejectWithValue }) => {
+    try {
+      await axios.put(`/contacts/${superheroId}`, data)
+      return superheroId
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  }
+)

@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import rootReducer from './reducers'
+import { superherosReducer } from './redux/superheros'
+// import { contactsReducer } from 'redux/contacts'
 
 export const store = configureStore({
   reducer: {
-    superheros: rootReducer,
+    superheros: superherosReducer,
   },
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV === 'development',
 })
