@@ -15,5 +15,5 @@ const superherosReducer = createReducer([], {
 })
 
 export const rootReducer = combineReducers({
-  contactsList: superherosReducer,
+  superherosList: superherosReducer,
 })

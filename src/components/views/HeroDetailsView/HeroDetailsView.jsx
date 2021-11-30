@@ -1,23 +1,31 @@
 import { useState, useEffect } from 'react'
 import { useParams, useHistory, useLocation } from 'react-router-dom'
-import { getSuperheroById } from '../../ApiServise/ApiServise'
+import { useSelector, useDispatch } from 'react-redux'
+import { superherosOperations, superherosSelectors } from 'redux/superheros'
+// import { getSuperheroById } from '../../ApiServise/ApiServise'
 import EditSuperheroModal from '../../EditSuperheroModal/EditSuperheroModal'
 import AddSuperheroBtn from '../../AddSuperheroBtn/AddSuperheroBtn'
 
 import styles from './HeroDetailsView.module.css'
 
 const HeroDetailsView = () => {
-  const [stateSuperhero, setStateSuperhero] = useState()
-  const [stateShowModal, setStateShowModal] = useState(false)
+  // const [stateSuperhero, setStateSuperhero] = useState()
   const { superheroId } = useParams()
+  const superhero = useSelector(superherosSelectors.getSuperheros).find(
+    (superhero) => superhero._id === superheroId
+  )
+
+  const [stateShowModal, setStateShowModal] = useState(false)
   const { state } = useLocation()
   const history = useHistory()
+  // const dispatch = useDispatch()
 
-  useEffect(() => {
-    getSuperheroById(superheroId).then((response) =>
-      setStateSuperhero(response)
-    )
-  }, [superheroId])
+  // useEffect(() => {
+  //   // getSuperheroById(superheroId).then((response) =>
+  //   //   setStateSuperhero(response)
+  //   // )
+  //   dispatch(superherosOperations.getSuperheroById(superheroId))
+  // }, [dispatch, superheroId])
 
   const goBack = () => {
     state?.from.pathname ? history.push(state.from.pathname) : history.push('/')
@@ -35,11 +43,11 @@ const HeroDetailsView = () => {
 
   const closeModal = (data) => {
     setStateShowModal(false)
-    if (data) {
-      getSuperheroById(superheroId).then((response) =>
-        setStateSuperhero(response)
-      )
-    }
+    // if (data) {
+    //   getSuperheroById(superheroId).then((response) =>
+    //     setStateSuperhero(response)
+    //   )
+    // }
   }
 
   return (
@@ -51,16 +59,16 @@ const HeroDetailsView = () => {
       {stateShowModal && (
         <EditSuperheroModal
           closeModal={closeModal}
-          data={stateSuperhero}
+          data={superhero}
         ></EditSuperheroModal>
       )}
-      {stateSuperhero && (
+      {superhero && (
         <section className={styles.section}>
           <ul className={styles.imageList}>
-            {stateSuperhero.images.length !== 0 ? (
-              stateSuperhero.images.map((image) => (
+            {superhero.images.length !== 0 ? (
+              superhero.images.map((image) => (
                 <li key={image}>
-                  <img src={image} alt={stateSuperhero.name} height='200px' />
+                  <img src={image} alt={superhero.name} height='200px' />
                 </li>
               ))
             ) : (
@@ -69,26 +77,20 @@ const HeroDetailsView = () => {
                   src={
                     'https://www.samatters.com/wp-content/uploads/2017/04/Super-Hero-300x286.png'
                   }
-                  alt={stateSuperhero.name}
+                  alt={superhero.name}
                   height='200px'
                 />
               </li>
             )}
           </ul>
-          {stateSuperhero.nickname && (
-            <p>Nickname: {stateSuperhero.nickname}</p>
+          {superhero.nickname && <p>Nickname: {superhero.nickname}</p>}
+          {superhero.real_name && <p>Real name: {superhero.real_name}</p>}
+          {superhero.origin_description && (
+            <p>Origin Description: {superhero.origin_description}</p>
           )}
-          {stateSuperhero.real_name && (
-            <p>Real name: {stateSuperhero.real_name}</p>
-          )}
-          {stateSuperhero.origin_description && (
-            <p>Origin Description: {stateSuperhero.origin_description}</p>
-          )}
-          {stateSuperhero.superpowers && (
-            <p>Superpowers: {stateSuperhero.superpowers}</p>
-          )}
-          {stateSuperhero.catch_phrase && (
-            <p>Catch phrase: {stateSuperhero.catch_phrase}</p>
+          {superhero.superpowers && <p>Superpowers: {superhero.superpowers}</p>}
+          {superhero.catch_phrase && (
+            <p>Catch phrase: {superhero.catch_phrase}</p>
           )}
         </section>
       )}

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { superherosOperations, superherosSelectors } from 'redux/superheros'
+
 import {
   getAllSuperheros,
   deleteSuperheroById,
@@ -13,20 +16,24 @@ import PaginatedItems from '../../Pagination/Pagination'
 import styles from './HomeView.module.css'
 
 const HomeView = () => {
-  const [stateSuperheros, setStateSuperheros] = useState([])
+  const superheros = useSelector(superherosSelectors.getSuperheros)
+  // const [stateSuperheros, setStateSuperheros] = useState([])
   const location = useLocation()
   const [stateShowModal, setStateShowModal] = useState(false)
 
   const [page, setPage] = useState(1)
   const [totalDocs, setTotalDocs] = useState()
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    getAllSuperheros(page).then((response) => {
-      setStateSuperheros(response.docs)
-      setTotalDocs(response.totalDocs)
-      setPage(response.page)
-    })
-  }, [page, totalDocs])
+    // getAllSuperheros(page).then((response) => {
+    //   setStateSuperheros(response.docs)
+    //   setTotalDocs(response.totalDocs)
+    //   setPage(response.page)
+    // })
+    dispatch(superherosOperations.getAllSuperheros(page))
+  }, [dispatch, page, totalDocs])
 
   const openModal = () => {
     setStateShowModal(true)
@@ -36,7 +43,7 @@ const HomeView = () => {
     setStateShowModal(false)
     if (data) {
       getAllSuperheros(page).then((response) => {
-        setStateSuperheros(response.docs)
+        // setStateSuperheros(response.docs)
         setTotalDocs(response.totalDocs)
       })
     }
@@ -46,7 +53,7 @@ const HomeView = () => {
     const res = await deleteSuperheroById(id)
     if (res.message === 'Superhero removed') {
       getAllSuperheros(page).then((response) => {
-        setStateSuperheros(response.docs)
+        // setStateSuperheros(response.docs)
         setTotalDocs(response.totalDocs)
       })
     }
@@ -63,8 +70,8 @@ const HomeView = () => {
         <AddSuperheroModal closeModal={closeModal}></AddSuperheroModal>
       )}
       <ul className={styles.superherosList}>
-        {stateSuperheros &&
-          stateSuperheros.map(({ _id, nickname, images }) => (
+        {superheros &&
+          superheros.map(({ _id, nickname, images }) => (
             <li key={_id}>
               {images.length !== 0 ? (
                 <Link
