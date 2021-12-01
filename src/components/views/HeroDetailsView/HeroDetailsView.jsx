@@ -9,16 +9,15 @@ import AddSuperheroBtn from '../../AddSuperheroBtn/AddSuperheroBtn'
 import styles from './HeroDetailsView.module.css'
 
 const HeroDetailsView = () => {
-  // const [stateSuperhero, setStateSuperhero] = useState()
   const { superheroId } = useParams()
   const superhero = useSelector(superherosSelectors.getSuperheros).find(
     (superhero) => superhero._id === superheroId
   )
 
-  const [stateShowModal, setStateShowModal] = useState(false)
+  const isEditModalOpen = useSelector(superherosSelectors.isEditModalOpen)
   const { state } = useLocation()
   const history = useHistory()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   // useEffect(() => {
   //   // getSuperheroById(superheroId).then((response) =>
@@ -38,17 +37,18 @@ const HeroDetailsView = () => {
   }
 
   const openModal = () => {
-    setStateShowModal(true)
+    dispatch(superherosOperations.openEditModal())
   }
 
-  const closeModal = (data) => {
-    setStateShowModal(false)
-    // if (data) {
-    //   getSuperheroById(superheroId).then((response) =>
-    //     setStateSuperhero(response)
-    //   )
-    // }
-  }
+  // const closeModal = () => {
+  //   dispatch(superherosOperations.closeEditModal())
+
+  //   // if (data) {
+  //   //   getSuperheroById(superheroId).then((response) =>
+  //   //     setStateSuperhero(response)
+  //   //   )
+  //   // }
+  // }
 
   return (
     <div className={styles.heroDetails}>
@@ -56,9 +56,9 @@ const HeroDetailsView = () => {
         Go back
       </button>
       <AddSuperheroBtn onClick={openModal} text='Edit Superhero' />
-      {stateShowModal && (
+      {isEditModalOpen && (
         <EditSuperheroModal
-          closeModal={closeModal}
+          // closeModal={closeModal}
           data={superhero}
         ></EditSuperheroModal>
       )}

@@ -2,6 +2,11 @@
 
 const getSuperheros = (state) => state.superheros.superherosList
 
+const isAddModalOpen = (state) => state.superheros.isAddModalOpen
+const isEditModalOpen = (state) => state.superheros.isEditModalOpen
+const needToReloadSuperheros = (state) =>
+  state.superheros.needToReloadSuperheros
+
 // const getSuperheroById = (state) => {
 //   //   if (state.superheros) {
 //   //     const superheros = getSuperheros(state)
@@ -21,4 +26,9 @@ const getSuperheros = (state) => state.superheros.superherosList
 // const isLoading = (state) => state.contacts.isLoading
 // const error = (state) => state.contacts.error
 
-export { getSuperheros }
+export {
+  getSuperheros,
+  isAddModalOpen,
+  isEditModalOpen,
+  needToReloadSuperheros,
+}

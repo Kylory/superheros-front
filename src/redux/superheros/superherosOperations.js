@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-// import { createAction } from '@reduxjs/toolkit'
+import { createAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'https://app-superheros.herokuapp.com/api'
@@ -81,3 +81,11 @@ export const updateSuperheroBuId = createAsyncThunk(
     }
   }
 )
+
+export const openAddModal = createAction('superheros/openAddModal')
+export const closeAddModal = createAction('superheros/closeAddModal')
+
+export const openEditModal = createAction('superheros/openEditModal')
+export const closeEditModal = createAction('superheros/closeEditModal')
+
+export const reloadSuperheros = createAction('superheros/reloadSuperheros')

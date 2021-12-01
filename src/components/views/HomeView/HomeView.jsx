@@ -3,10 +3,6 @@ import { Link, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { superherosOperations, superherosSelectors } from 'redux/superheros'
 
-import {
-  getAllSuperheros,
-  deleteSuperheroById,
-} from '../../ApiServise/ApiServise'
 import AddSuperheroBtn from '../../AddSuperheroBtn/AddSuperheroBtn'
 import AddSuperheroModal from '../../AddSuperheroModal/AddSuperheroModal'
 
@@ -17,9 +13,11 @@ import styles from './HomeView.module.css'
 
 const HomeView = () => {
   const superheros = useSelector(superherosSelectors.getSuperheros)
-  // const [stateSuperheros, setStateSuperheros] = useState([])
+  const isAddModalOpen = useSelector(superherosSelectors.isAddModalOpen)
+  const needToReloadSuperheros = useSelector(
+    superherosSelectors.needToReloadSuperheros
+  )
   const location = useLocation()
-  const [stateShowModal, setStateShowModal] = useState(false)
 
   const [page, setPage] = useState(1)
   const [totalDocs, setTotalDocs] = useState()
@@ -32,31 +30,44 @@ const HomeView = () => {
     //   setTotalDocs(response.totalDocs)
     //   setPage(response.page)
     // })
+    // console.log(needToReloadSuperheros)
     dispatch(superherosOperations.getAllSuperheros(page))
-  }, [dispatch, page, totalDocs])
+  }, [dispatch, needToReloadSuperheros, page, totalDocs])
+
+  // if (needToReloadSuperheros === true) {
+  //   dispatch(superherosOperations.getAllSuperheros(page))
+  // }
 
   const openModal = () => {
-    setStateShowModal(true)
+    dispatch(superherosOperations.openAddModal())
   }
 
-  const closeModal = (data) => {
-    setStateShowModal(false)
-    if (data) {
-      getAllSuperheros(page).then((response) => {
-        // setStateSuperheros(response.docs)
-        setTotalDocs(response.totalDocs)
-      })
-    }
-  }
+  // const closeModal = () => {
+  //   dispatch(superherosOperations.closeAddModal())
 
-  const deleteSuperhero = async (id) => {
-    const res = await deleteSuperheroById(id)
-    if (res.message === 'Superhero removed') {
-      getAllSuperheros(page).then((response) => {
-        // setStateSuperheros(response.docs)
-        setTotalDocs(response.totalDocs)
-      })
-    }
+  //   // if (data) {
+  //   //   dispatch(
+  //   //     superherosOperations.getAllSuperheros(page)
+  //   //     // getAllSuperheros(page).then((response) => {
+  //   //     // setStateSuperheros(response.docs)
+  //   //     // setTotalDocs(response.totalDocs)
+  //   //     // }
+  //   //   )
+  //   // }
+  // }
+
+  const deleteSuperhero = async (superheroId) => {
+    // const res = await deleteSuperheroById(id)
+    const res = await dispatch(
+      superherosOperations.deleteSuperheroById(superheroId)
+    )
+    console.log('deleteSuperhero res', res)
+    // if (res.message === 'Superhero removed') {
+    //   getAllSuperheros(page).then((response) => {
+    //     // setStateSuperheros(response.docs)
+    //     setTotalDocs(response.totalDocs)
+    //   })
+    // }
   }
 
   const requestedPage = (requestedPage) => {
@@ -66,9 +77,7 @@ const HomeView = () => {
   return (
     <div className={styles.superherosSection}>
       <AddSuperheroBtn onClick={openModal} text='Add Superhero' />
-      {stateShowModal && (
-        <AddSuperheroModal closeModal={closeModal}></AddSuperheroModal>
-      )}
+      {isAddModalOpen && <AddSuperheroModal></AddSuperheroModal>}
       <ul className={styles.superherosList}>
         {superheros &&
           superheros.map(({ _id, nickname, images }) => (

@@ -5,7 +5,7 @@ import styles from './AddSuperheroModal.module.css'
 import { superherosOperations } from 'redux/superheros'
 import { useDispatch } from 'react-redux'
 
-const Modal = (props) => {
+const Modal = () => {
   const [nickname, setNickname] = useState('')
   const [real_name, setRealName] = useState('')
   const [origin_description, setOriginDescription] = useState('')
@@ -57,19 +57,24 @@ const Modal = (props) => {
         break
     }
   }
+  const closeModal = () => {
+    dispatch(superherosOperations.closeAddModal())
+  }
 
   //Закриває модалку при натисканні кнопки Escape
   const handleKeyDowm = (e) => {
     // console.log(e.code)
     if (e.code === 'Escape') {
-      props.closeModal()
+      // props.closeModal()
+      closeModal()
     }
   }
 
   //Закриває модалку при кліку в оверлей
   const handleClick = (e) => {
     if (e.target === e.currentTarget) {
-      props.closeModal()
+      // props.closeModal()
+      closeModal()
     }
   }
 
@@ -103,7 +108,8 @@ const Modal = (props) => {
     // const res = await addSuperhero(data)
     // console.log(res)
     if (res.payload.request.status === 201) {
-      props.closeModal('sended')
+      // props.closeModal('sended')
+      closeModal()
     }
   }
 

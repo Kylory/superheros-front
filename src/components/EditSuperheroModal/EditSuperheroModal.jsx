@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { Button, TextField } from '@material-ui/core'
 import styles from './EditSuperheroModal.module.css'
 import { updateSuperheroBuId } from '../ApiServise/ApiServise'
+import { superherosOperations } from 'redux/superheros'
+import { useDispatch } from 'react-redux'
 
 const Modal = (props) => {
   const [nickname, setNickname] = useState(props.data.nickname)
@@ -13,6 +15,7 @@ const Modal = (props) => {
   const [superpowers, setSuperpowers] = useState(props.data.superpowers)
   const [catch_phrase, setCatchPhrase] = useState(props.data.catch_phrase)
   const { superheroId } = useParams()
+  const dispatch = useDispatch()
 
   // Додає EventListener для відстеження натискання кнопок
   useEffect(() => {
@@ -56,18 +59,24 @@ const Modal = (props) => {
     }
   }
 
+  const closeModal = () => {
+    dispatch(superherosOperations.closeEditModal())
+  }
+
   //Закриває модалку при натисканні кнопки Escape
   const handleKeyDowm = (e) => {
     // console.log(e.code)
     if (e.code === 'Escape') {
-      props.closeModal()
+      // props.closeModal()
+      closeModal()
     }
   }
 
   //Закриває модалку при кліку в оверлей
   const handleClick = (e) => {
     if (e.target === e.currentTarget) {
-      props.closeModal()
+      // props.closeModal()
+      closeModal()
     }
   }
 
@@ -84,7 +93,8 @@ const Modal = (props) => {
 
     const res = await updateSuperheroBuId(superheroId, data)
     if (res.status === 200) {
-      props.closeModal('ok')
+      // props.closeModal('ok')
+      closeModal()
     }
   }
 
