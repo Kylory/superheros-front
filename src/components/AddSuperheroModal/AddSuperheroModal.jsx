@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import styles from './AddSuperheroModal.module.css'
-import { addSuperhero } from '../ApiServise/ApiServise'
+// import { addSuperhero } from '../ApiServise/ApiServise'
+import { superherosOperations } from 'redux/superheros'
+import { useDispatch } from 'react-redux'
 
 const Modal = (props) => {
   const [nickname, setNickname] = useState('')
@@ -11,6 +13,7 @@ const Modal = (props) => {
   const [catch_phrase, setCatchPhrase] = useState('')
   const [images, setImages] = useState(null)
   const isButtonDisable = nickname === ''
+  const dispatch = useDispatch()
 
   // Додає EventListener для відстеження натискання кнопок
   useEffect(() => {
@@ -95,8 +98,11 @@ const Modal = (props) => {
       )
     }
 
-    const res = await addSuperhero(data)
-    if (res.status === 201) {
+    const res = await dispatch(superherosOperations.addSuperhero(data))
+    // console.log('res', res.payload.request.status)
+    // const res = await addSuperhero(data)
+    // console.log(res)
+    if (res.payload.request.status === 201) {
       props.closeModal('sended')
     }
   }

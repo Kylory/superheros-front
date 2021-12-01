@@ -16,13 +16,6 @@ export const getAllSuperheros = createAsyncThunk(
   }
 )
 
-// async function getSuperheroById(superheroId) {
-//   const { BASE_URL } = API_OPTIONS
-//   const response = await axios.get(`${BASE_URL}/superheros/${superheroId}`)
-
-//   return response.data
-// }
-
 // export const getSuperheroById = createAsyncThunk(
 //   'superheros/getSuperheroById',
 //   async (superheroId, { rejectWithValue }) => {
@@ -36,29 +29,11 @@ export const getAllSuperheros = createAsyncThunk(
 //   }
 // )
 
-// async function addSuperhero(data) {
-//   const { BASE_URL } = API_OPTIONS
-//   const response = await axios.post(`${BASE_URL}/superheros`, data)
-
-//   return response
-// }
-
 export const addSuperhero = createAsyncThunk(
   'superheros/addSuperhero',
-  async (
-    // { nickname, real_name, origin_description, superpowers, catch_phrase },
-    { data },
-    { rejectWithValue }
-  ) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/superheros', {
-        // nickname: `${nickname}`,
-        // real_name: `${real_name}`,
-        // origin_description: `${origin_description}`,
-        // superpowers: `${superpowers}`,
-        // catch_phrase: `${catch_phrase}`,
-        data,
-      })
+      const response = await axios.post('/superheros', data)
       return response
     } catch (error) {
       return rejectWithValue(error)
