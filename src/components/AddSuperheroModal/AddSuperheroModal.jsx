@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import styles from './AddSuperheroModal.module.css'
-// import { addSuperhero } from '../ApiServise/ApiServise'
 import { superherosOperations } from 'redux/superheros'
 import { useDispatch } from 'react-redux'
 
@@ -63,9 +62,7 @@ const Modal = () => {
 
   //Закриває модалку при натисканні кнопки Escape
   const handleKeyDowm = (e) => {
-    // console.log(e.code)
     if (e.code === 'Escape') {
-      // props.closeModal()
       closeModal()
     }
   }
@@ -73,7 +70,6 @@ const Modal = () => {
   //Закриває модалку при кліку в оверлей
   const handleClick = (e) => {
     if (e.target === e.currentTarget) {
-      // props.closeModal()
       closeModal()
     }
   }
@@ -103,14 +99,8 @@ const Modal = () => {
       )
     }
 
-    const res = await dispatch(superherosOperations.addSuperhero(data))
-    // console.log('res', res.payload.request.status)
-    // const res = await addSuperhero(data)
-    // console.log(res)
-    if (res.payload.request.status === 201) {
-      // props.closeModal('sended')
-      closeModal()
-    }
+    dispatch(superherosOperations.addSuperhero(data))
+    closeModal()
   }
 
   return (

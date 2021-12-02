@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import { useParams, useHistory, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { superherosOperations, superherosSelectors } from 'redux/superheros'
-// import { getSuperheroById } from '../../ApiServise/ApiServise'
 import EditSuperheroModal from '../../EditSuperheroModal/EditSuperheroModal'
 import AddSuperheroBtn from '../../AddSuperheroBtn/AddSuperheroBtn'
 
@@ -57,10 +56,7 @@ const HeroDetailsView = () => {
       </button>
       <AddSuperheroBtn onClick={openModal} text='Edit Superhero' />
       {isEditModalOpen && (
-        <EditSuperheroModal
-          // closeModal={closeModal}
-          data={superhero}
-        ></EditSuperheroModal>
+        <EditSuperheroModal data={superhero}></EditSuperheroModal>
       )}
       {superhero && (
         <section className={styles.section}>

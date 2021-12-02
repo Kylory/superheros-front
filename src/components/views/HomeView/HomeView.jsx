@@ -14,13 +14,16 @@ import styles from './HomeView.module.css'
 const HomeView = () => {
   const superheros = useSelector(superherosSelectors.getSuperheros)
   const isAddModalOpen = useSelector(superherosSelectors.isAddModalOpen)
-  const needToReloadSuperheros = useSelector(
-    superherosSelectors.needToReloadSuperheros
-  )
+  const page = useSelector(superherosSelectors.page)
+  const totalDocs = useSelector(superherosSelectors.totalDocs)
+
+  // const needToReloadSuperheros = useSelector(
+  //   superherosSelectors.needToReloadSuperheros
+  // )
   const location = useLocation()
 
-  const [page, setPage] = useState(1)
-  const [totalDocs, setTotalDocs] = useState()
+  // const [page, setPage] = useState(1)
+  // const [totalDocs, setTotalDocs] = useState()
 
   const dispatch = useDispatch()
 
@@ -32,7 +35,7 @@ const HomeView = () => {
     // })
     // console.log(needToReloadSuperheros)
     dispatch(superherosOperations.getAllSuperheros(page))
-  }, [dispatch, needToReloadSuperheros, page, totalDocs])
+  }, [dispatch, page])
 
   // if (needToReloadSuperheros === true) {
   //   dispatch(superherosOperations.getAllSuperheros(page))
@@ -70,9 +73,9 @@ const HomeView = () => {
     // }
   }
 
-  const requestedPage = (requestedPage) => {
-    setPage(requestedPage)
-  }
+  // const requestedPage = (requestedPage) => {
+  //   setPage(requestedPage)
+  // }
 
   return (
     <div className={styles.superherosSection}>
@@ -142,7 +145,7 @@ const HomeView = () => {
         <PaginatedItems
           itemsPerPage={5}
           totalDocs={totalDocs}
-          requestedPage={requestedPage}
+          // requestedPage={requestedPage}
         />
       )}
     </div>

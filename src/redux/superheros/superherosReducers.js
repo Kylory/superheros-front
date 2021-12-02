@@ -4,7 +4,7 @@ import { superherosOperations } from 'redux/superheros'
 
 const superherosReducer = createReducer([], {
   [superherosOperations.getAllSuperheros.fulfilled]: (_, { payload }) =>
-    payload,
+    payload.docs,
   //   [superherosOperations.addContact]: (state, { payload }) => [
   //     ...state,
   //     payload,
@@ -31,9 +31,21 @@ const needToReloadSuperherosReducer = createReducer(false, {
   [superherosOperations.getAllSuperheros.fulfilled]: () => false,
 })
 
+const pageReducer = createReducer(1, {
+  [superherosOperations.getAllSuperheros.fulfilled]: (_, { payload }) =>
+    payload.page,
+})
+
+const totalDocsReducer = createReducer(1, {
+  [superherosOperations.getAllSuperheros.fulfilled]: (_, { payload }) =>
+    payload.totalDocs,
+})
+
 export const rootReducer = combineReducers({
   superherosList: superherosReducer,
   isAddModalOpen: addModalReducer,
   isEditModalOpen: editModalReducer,
   needToReloadSuperheros: needToReloadSuperherosReducer,
+  page: pageReducer,
+  totalDocs: totalDocsReducer,
 })

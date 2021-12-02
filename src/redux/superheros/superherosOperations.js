@@ -9,7 +9,8 @@ export const getAllSuperheros = createAsyncThunk(
   async (page, { rejectWithValue }) => {
     try {
       const response = await axios.get(`/superheros?page=${page}&limit=5`)
-      return response.data.superheros.docs
+      // console.log('getAllSuperheros response', response)
+      return response.data.superheros
     } catch (error) {
       return rejectWithValue(error)
     }

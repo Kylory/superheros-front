@@ -6,6 +6,8 @@ const isAddModalOpen = (state) => state.superheros.isAddModalOpen
 const isEditModalOpen = (state) => state.superheros.isEditModalOpen
 const needToReloadSuperheros = (state) =>
   state.superheros.needToReloadSuperheros
+const page = (state) => state.superheros.page
+const totalDocs = (state) => state.superheros.totalDocs
 
 // const getSuperheroById = (state) => {
 //   //   if (state.superheros) {
@@ -31,4 +33,6 @@ export {
   isAddModalOpen,
   isEditModalOpen,
   needToReloadSuperheros,
+  page,
+  totalDocs,
 }
