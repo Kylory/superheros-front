@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { superherosOperations, superherosSelectors } from 'redux/superheros'
@@ -16,10 +16,6 @@ const HomeView = () => {
   const isAddModalOpen = useSelector(superherosSelectors.isAddModalOpen)
   const page = useSelector(superherosSelectors.page)
   const totalDocs = useSelector(superherosSelectors.totalDocs)
-
-  // const needToReloadSuperheros = useSelector(
-  //   superherosSelectors.needToReloadSuperheros
-  // )
   const location = useLocation()
 
   // const [page, setPage] = useState(1)
@@ -28,49 +24,16 @@ const HomeView = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // getAllSuperheros(page).then((response) => {
-    //   setStateSuperheros(response.docs)
-    //   setTotalDocs(response.totalDocs)
-    //   setPage(response.page)
-    // })
-    // console.log(needToReloadSuperheros)
     dispatch(superherosOperations.getAllSuperheros(page))
   }, [dispatch, page])
-
-  // if (needToReloadSuperheros === true) {
-  //   dispatch(superherosOperations.getAllSuperheros(page))
-  // }
 
   const openModal = () => {
     dispatch(superherosOperations.openAddModal())
   }
 
-  // const closeModal = () => {
-  //   dispatch(superherosOperations.closeAddModal())
-
-  //   // if (data) {
-  //   //   dispatch(
-  //   //     superherosOperations.getAllSuperheros(page)
-  //   //     // getAllSuperheros(page).then((response) => {
-  //   //     // setStateSuperheros(response.docs)
-  //   //     // setTotalDocs(response.totalDocs)
-  //   //     // }
-  //   //   )
-  //   // }
-  // }
-
   const deleteSuperhero = async (superheroId) => {
-    // const res = await deleteSuperheroById(id)
-    const res = await dispatch(
-      superherosOperations.deleteSuperheroById(superheroId)
-    )
-    console.log('deleteSuperhero res', res)
-    // if (res.message === 'Superhero removed') {
-    //   getAllSuperheros(page).then((response) => {
-    //     // setStateSuperheros(response.docs)
-    //     setTotalDocs(response.totalDocs)
-    //   })
-    // }
+    await dispatch(superherosOperations.deleteSuperheroById(superheroId))
+    dispatch(superherosOperations.getAllSuperheros(page))
   }
 
   // const requestedPage = (requestedPage) => {

@@ -14,6 +14,11 @@ const superherosReducer = createReducer([], {
   //     state.filter((contact) => contact.id !== payload),
 })
 
+const superheroReducer = createReducer([], {
+  [superherosOperations.getAllSuperheros.fulfilled]: (_, { payload }) =>
+    payload,
+})
+
 const addModalReducer = createReducer(false, {
   [superherosOperations.openAddModal]: () => true,
   [superherosOperations.closeAddModal]: () => false,
@@ -24,12 +29,12 @@ const editModalReducer = createReducer(false, {
   [superherosOperations.closeEditModal]: () => false,
 })
 
-const needToReloadSuperherosReducer = createReducer(false, {
-  [superherosOperations.reloadSuperheros]: () => true,
-  // [superherosOperations.addSuperhero.pending]: () => true,
-  [superherosOperations.addSuperhero.fulfilled]: () => true,
-  [superherosOperations.getAllSuperheros.fulfilled]: () => false,
-})
+// const needToReloadSuperherosReducer = createReducer(false, {
+//   [superherosOperations.reloadSuperheros]: () => true,
+//   [superherosOperations.addSuperhero.pending]: () => true,
+//   [superherosOperations.addSuperhero.fulfilled]: () => true,
+//   [superherosOperations.getAllSuperheros.fulfilled]: () => false,
+// })
 
 const pageReducer = createReducer(1, {
   [superherosOperations.getAllSuperheros.fulfilled]: (_, { payload }) =>
@@ -43,9 +48,10 @@ const totalDocsReducer = createReducer(1, {
 
 export const rootReducer = combineReducers({
   superherosList: superherosReducer,
+  superheroById: superheroReducer,
   isAddModalOpen: addModalReducer,
   isEditModalOpen: editModalReducer,
-  needToReloadSuperheros: needToReloadSuperherosReducer,
+  // needToReloadSuperheros: needToReloadSuperherosReducer,
   page: pageReducer,
   totalDocs: totalDocsReducer,
 })

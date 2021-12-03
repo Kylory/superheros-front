@@ -1,4 +1,4 @@
-// import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useHistory, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { superherosOperations, superherosSelectors } from 'redux/superheros'
@@ -9,15 +9,24 @@ import styles from './HeroDetailsView.module.css'
 
 const HeroDetailsView = () => {
   const { superheroId } = useParams()
-  const superhero = useSelector(superherosSelectors.getSuperheros).find(
-    (superhero) => superhero._id === superheroId
-  )
+  const [superhero, superheroPage] = useState()
+  const dispatch = useDispatch()
+  // const superhero = useSelector(superherosSelectors.getSuperheros).find(
+  //   (superhero) => superhero._id === superheroId
+  // )
+
+  useEffect(() => {
+    const hero = dispatch(superherosOperations.getSuperheroById(superheroId))
+    console.log(hero)
+  }, [dispatch, superheroId])
 
   const isEditModalOpen = useSelector(superherosSelectors.isEditModalOpen)
   const { state } = useLocation()
   const history = useHistory()
-  const dispatch = useDispatch()
-
+  // const superhero = async () =>
+  //   await dispatch(superherosOperations.getSuperheroById(superheroId))
+  // superhero()
+  // dispatch(superherosOperations.getSuperheroById(superheroId))
   // useEffect(() => {
   //   // getSuperheroById(superheroId).then((response) =>
   //   //   setStateSuperhero(response)
@@ -55,9 +64,7 @@ const HeroDetailsView = () => {
         Go back
       </button>
       <AddSuperheroBtn onClick={openModal} text='Edit Superhero' />
-      {isEditModalOpen && (
-        <EditSuperheroModal data={superhero}></EditSuperheroModal>
-      )}
+      {isEditModalOpen && <EditSuperheroModal />}
       {superhero && (
         <section className={styles.section}>
           <ul className={styles.imageList}>

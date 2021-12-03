@@ -2,19 +2,22 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Button, TextField } from '@material-ui/core'
 import styles from './EditSuperheroModal.module.css'
-import { updateSuperheroBuId } from '../ApiServise/ApiServise'
-import { superherosOperations } from 'redux/superheros'
-import { useDispatch } from 'react-redux'
+import { superherosOperations, superherosSelectors } from 'redux/superheros'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Modal = (props) => {
-  const [nickname, setNickname] = useState(props.data.nickname)
-  const [real_name, setRealName] = useState(props.data.real_name)
-  const [origin_description, setOriginDescription] = useState(
-    props.data.origin_description
-  )
-  const [superpowers, setSuperpowers] = useState(props.data.superpowers)
-  const [catch_phrase, setCatchPhrase] = useState(props.data.catch_phrase)
+const Modal = () => {
   const { superheroId } = useParams()
+  const superhero = useSelector(superherosSelectors.getSuperheros).find(
+    (superhero) => superhero._id === superheroId
+  )
+  const [nickname, setNickname] = useState(superhero.nickname)
+  const [real_name, setRealName] = useState(superhero.real_name)
+  const [origin_description, setOriginDescription] = useState(
+    superhero.origin_description
+  )
+  const [superpowers, setSuperpowers] = useState(superhero.superpowers)
+  const [catch_phrase, setCatchPhrase] = useState(superhero.catch_phrase)
+  const page = useSelector(superherosSelectors.page)
   const dispatch = useDispatch()
 
   // Додає EventListener для відстеження натискання кнопок
@@ -65,9 +68,7 @@ const Modal = (props) => {
 
   //Закриває модалку при натисканні кнопки Escape
   const handleKeyDowm = (e) => {
-    // console.log(e.code)
     if (e.code === 'Escape') {
-      // props.closeModal()
       closeModal()
     }
   }
@@ -75,7 +76,6 @@ const Modal = (props) => {
   //Закриває модалку при кліку в оверлей
   const handleClick = (e) => {
     if (e.target === e.currentTarget) {
-      // props.closeModal()
       closeModal()
     }
   }
@@ -84,18 +84,19 @@ const Modal = (props) => {
     e.preventDefault()
 
     const data = {
-      nickname: nickname,
-      real_name: real_name,
-      origin_description: origin_description,
-      superpowers: superpowers,
-      catch_phrase: catch_phrase,
+      superheroId: superheroId,
+      superhero: {
+        nickname: nickname,
+        real_name: real_name,
+        origin_description: origin_description,
+        superpowers: superpowers,
+        catch_phrase: catch_phrase,
+      },
     }
 
-    const res = await updateSuperheroBuId(superheroId, data)
-    if (res.status === 200) {
-      // props.closeModal('ok')
-      closeModal()
-    }
+    await dispatch(superherosOperations.updateSuperheroById(data))
+    dispatch(superherosOperations.getAllSuperheros(page))
+    closeModal()
   }
 
   return (

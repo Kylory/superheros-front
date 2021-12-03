@@ -4,8 +4,8 @@ const getSuperheros = (state) => state.superheros.superherosList
 
 const isAddModalOpen = (state) => state.superheros.isAddModalOpen
 const isEditModalOpen = (state) => state.superheros.isEditModalOpen
-const needToReloadSuperheros = (state) =>
-  state.superheros.needToReloadSuperheros
+// const needToReloadSuperheros = (state) =>
+//   state.superheros.needToReloadSuperheros
 const page = (state) => state.superheros.page
 const totalDocs = (state) => state.superheros.totalDocs
 
@@ -32,7 +32,7 @@ export {
   getSuperheros,
   isAddModalOpen,
   isEditModalOpen,
-  needToReloadSuperheros,
+  // needToReloadSuperheros,
   page,
   totalDocs,
 }
