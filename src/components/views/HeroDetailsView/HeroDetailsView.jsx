@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams, useHistory, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { superherosOperations, superherosSelectors } from 'redux/superheros'
@@ -9,32 +9,20 @@ import styles from './HeroDetailsView.module.css'
 
 const HeroDetailsView = () => {
   const { superheroId } = useParams()
-  const [superhero, superheroPage] = useState()
-  const dispatch = useDispatch()
-  // const superhero = useSelector(superherosSelectors.getSuperheros).find(
-  //   (superhero) => superhero._id === superheroId
-  // )
-
-  useEffect(() => {
-    const hero = dispatch(superherosOperations.getSuperheroById(superheroId))
-    console.log(hero)
-  }, [dispatch, superheroId])
-
-  const isEditModalOpen = useSelector(superherosSelectors.isEditModalOpen)
   const { state } = useLocation()
   const history = useHistory()
-  // const superhero = async () =>
-  //   await dispatch(superherosOperations.getSuperheroById(superheroId))
-  // superhero()
-  // dispatch(superherosOperations.getSuperheroById(superheroId))
-  // useEffect(() => {
-  //   // getSuperheroById(superheroId).then((response) =>
-  //   //   setStateSuperhero(response)
-  //   // )
-  //   dispatch(superherosOperations.getSuperheroById(superheroId))
-  // }, [dispatch, superheroId])
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(superherosOperations.getSuperheroById(superheroId))
+  }, [dispatch, superheroId])
+
+  const superhero = useSelector(superherosSelectors.getSuperheroById)
+  const isEditModalOpen = useSelector(superherosSelectors.isEditModalOpen)
 
   const goBack = () => {
+    dispatch(superherosOperations.clearSuperheroState())
+
     state?.from.pathname ? history.push(state.from.pathname) : history.push('/')
 
     if (state?.from.search) {
@@ -47,16 +35,6 @@ const HeroDetailsView = () => {
   const openModal = () => {
     dispatch(superherosOperations.openEditModal())
   }
-
-  // const closeModal = () => {
-  //   dispatch(superherosOperations.closeEditModal())
-
-  //   // if (data) {
-  //   //   getSuperheroById(superheroId).then((response) =>
-  //   //     setStateSuperhero(response)
-  //   //   )
-  //   // }
-  // }
 
   return (
     <div className={styles.heroDetails}>

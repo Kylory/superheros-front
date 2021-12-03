@@ -102,6 +102,7 @@ const Modal = () => {
 
     await dispatch(superherosOperations.addSuperhero(data))
     dispatch(superherosOperations.getAllSuperheros(page))
+
     closeModal()
   }
 

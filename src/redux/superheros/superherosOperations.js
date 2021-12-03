@@ -70,3 +70,7 @@ export const closeAddModal = createAction('superheros/closeAddModal')
 
 export const openEditModal = createAction('superheros/openEditModal')
 export const closeEditModal = createAction('superheros/closeEditModal')
+
+export const clearSuperheroState = createAction(
+  'superheros/clearSuperheroState'
+)
