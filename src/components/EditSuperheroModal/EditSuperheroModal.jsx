@@ -7,9 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Modal = () => {
   const { superheroId } = useParams()
-  const superhero = useSelector(superherosSelectors.getSuperheros).find(
-    (superhero) => superhero._id === superheroId
-  )
+  const superhero = useSelector(superherosSelectors.getSuperheroById)
   const [nickname, setNickname] = useState(superhero.nickname)
   const [real_name, setRealName] = useState(superhero.real_name)
   const [origin_description, setOriginDescription] = useState(
@@ -17,7 +15,6 @@ const Modal = () => {
   )
   const [superpowers, setSuperpowers] = useState(superhero.superpowers)
   const [catch_phrase, setCatchPhrase] = useState(superhero.catch_phrase)
-  const page = useSelector(superherosSelectors.page)
   const dispatch = useDispatch()
 
   // Додає EventListener для відстеження натискання кнопок
@@ -94,8 +91,7 @@ const Modal = () => {
       },
     }
 
-    await dispatch(superherosOperations.updateSuperheroById(data))
-    dispatch(superherosOperations.getAllSuperheros(page))
+    dispatch(superherosOperations.updateSuperheroById(data))
     closeModal()
   }
 

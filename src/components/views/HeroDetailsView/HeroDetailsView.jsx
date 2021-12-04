@@ -56,6 +56,7 @@ const HeroDetailsView = () => {
               <li>
                 <img
                   src={
+                    // 'https://www.samatters.com/wp-content/uploads/2017/04/Super-Hero-300x286.png'
                     'https://www.samatters.com/wp-content/uploads/2017/04/Super-Hero-300x286.png'
                   }
                   alt={superhero.name}

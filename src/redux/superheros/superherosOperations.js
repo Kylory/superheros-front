@@ -32,8 +32,7 @@ export const addSuperhero = createAsyncThunk(
   'superheros/addSuperhero',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/superheros', data)
-      return response
+      await axios.post('/superheros', data)
     } catch (error) {
       return rejectWithValue(error)
     }
@@ -56,9 +55,8 @@ export const updateSuperheroById = createAsyncThunk(
   'superheros/updateSuperheroById',
   async ({ superheroId, superhero }, { rejectWithValue }) => {
     try {
-      const res = await axios.put(`/superheros/${superheroId}`, superhero)
-      console.log(res)
-      return superheroId
+      const response = await axios.put(`/superheros/${superheroId}`, superhero)
+      return response.data.updatedSuperhero
     } catch (error) {
       return rejectWithValue(error)
     }
@@ -73,4 +71,11 @@ export const closeEditModal = createAction('superheros/closeEditModal')
 
 export const clearSuperheroState = createAction(
   'superheros/clearSuperheroState'
+)
+
+export const changePage = createAsyncThunk(
+  'superheros/changePage',
+  async (page, { rejectWithValue }) => {
+    return page
+  }
 )

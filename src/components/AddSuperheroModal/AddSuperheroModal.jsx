@@ -49,7 +49,6 @@ const Modal = () => {
         break
 
       case 'images':
-        // setFile(e.target.files)
         setImages(e.target.files)
         break
 

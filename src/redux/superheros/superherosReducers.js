@@ -10,6 +10,8 @@ const superherosReducer = createReducer([], {
 const superheroReducer = createReducer(null, {
   [superherosOperations.getSuperheroById.fulfilled]: (_, { payload }) =>
     payload,
+  [superherosOperations.updateSuperheroById.fulfilled]: (_, { payload }) =>
+    payload,
   [superherosOperations.clearSuperheroState]: () => null,
 })
 
@@ -26,6 +28,7 @@ const editModalReducer = createReducer(false, {
 const pageReducer = createReducer(1, {
   [superherosOperations.getAllSuperheros.fulfilled]: (_, { payload }) =>
     payload.page,
+  [superherosOperations.changePage.fulfilled]: (_, { payload }) => payload,
 })
 
 const totalDocsReducer = createReducer(1, {

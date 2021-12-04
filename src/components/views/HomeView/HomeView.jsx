@@ -36,9 +36,9 @@ const HomeView = () => {
     dispatch(superherosOperations.getAllSuperheros(page))
   }
 
-  // const requestedPage = (requestedPage) => {
-  //   setPage(requestedPage)
-  // }
+  const requestedPage = (page) => {
+    dispatch(superherosOperations.changePage(page))
+  }
 
   return (
     <div className={styles.superherosSection}>
@@ -108,7 +108,7 @@ const HomeView = () => {
         <PaginatedItems
           itemsPerPage={5}
           totalDocs={totalDocs}
-          // requestedPage={requestedPage}
+          requestedPage={requestedPage}
         />
       )}
     </div>
